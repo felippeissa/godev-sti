@@ -1,0 +1,1803 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>GO.DEV · Ecossistema IA · STI Goiás</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ───────── Informatiza Design System · Tokens ─────────
+   Source: uploads/InformatizaDesignSystem.md                */
+
+:root {
+  /* Primary (verde institucional) */
+  --primary-900: #0D2B1F;
+  --primary-700: #1B5E36;
+  --primary-500: #39B65E;
+  --primary-300: #A1E8B8;
+
+  /* Neutrals */
+  --neutral-900: #111827;
+  --neutral-700: #374151;
+  --neutral-500: #6B7280;
+  --neutral-300: #D1D5DB;
+  --neutral-100: #F3F4F6;
+  --white: #FFFFFF;
+
+  /* Surfaces — light theme */
+  --bg: var(--white);
+  --bg-alt: var(--neutral-100);
+  --surface: var(--white);
+  --surface-2: var(--neutral-100);
+  --surface-3: #E5E7EB;
+  --text: var(--neutral-900);
+  --text-2: var(--neutral-500);
+  --text-3: #9CA3AF;
+  --border: #E5E7EB;
+  --border-strong: var(--neutral-300);
+
+  /* Brand */
+  --accent: var(--primary-500);
+  --accent-hover: var(--primary-700);
+  --accent-soft: #E6F7EC;
+  --accent-text: var(--primary-700);
+  --accent-deep: var(--primary-900);
+
+  /* Spacing scale */
+  --sp-xs: 4px;
+  --sp-sm: 8px;
+  --sp-md: 16px;
+  --sp-lg: 24px;
+  --sp-xl: 32px;
+  --sp-2xl: 48px;
+
+  /* Radii */
+  --r-sm: 6px;
+  --r-md: 12px;
+  --r-lg: 16px;
+  --r-xl: 24px;
+  --r-full: 999px;
+
+  /* Type */
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(17,24,39,.04), 0 1px 1px rgba(17,24,39,.03);
+  --shadow-md: 0 4px 16px -2px rgba(17,24,39,.08), 0 2px 6px -1px rgba(17,24,39,.04);
+  --shadow-lg: 0 24px 60px -12px rgba(13,43,31,.18), 0 8px 24px -6px rgba(13,43,31,.08);
+  --shadow-glow: 0 0 0 0 rgba(57,182,94,.45);
+
+  /* Code editor */
+  --code-bg: #0B1F14;
+  --code-text: #E6F0E8;
+  --code-keyword: #7CCB91;
+  --code-string: #FBCFE8;
+  --code-comment: #5C7A66;
+  --code-fn: #A1E8B8;
+  --code-decorator: #FBBF24;
+  --code-class: #BAE6FD;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0A1410;
+  --bg-alt: #0F1D17;
+  --surface: #122019;
+  --surface-2: #182C22;
+  --surface-3: #1F3A2C;
+  --text: #F3F4F6;
+  --text-2: #9AA7A0;
+  --text-3: #6B7B72;
+  --border: #1F3A2C;
+  --border-strong: #2B4F3C;
+  --accent: var(--primary-500);
+  --accent-hover: var(--primary-300);
+  --accent-soft: #14291D;
+  --accent-text: var(--primary-300);
+  --accent-deep: #052213;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,.4);
+  --shadow-md: 0 4px 16px -2px rgba(0,0,0,.45), 0 2px 6px -1px rgba(0,0,0,.3);
+  --shadow-lg: 0 24px 60px -12px rgba(0,0,0,.6), 0 8px 24px -6px rgba(0,0,0,.4);
+  --code-bg: #050D08;
+}
+
+/* ───────── Base ───────── */
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  line-height: 1.55;
+  transition: background-color .35s ease, color .35s ease;
+}
+.mono { font-family: var(--font-mono); }
+
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; }
+
+/* ───────── Layout helpers ───────── */
+.container { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 var(--sp-xl); }
+@media (max-width: 720px) { .container { padding: 0 var(--sp-lg); } }
+
+/* ───────── Typography scale ───────── */
+h1, h2, h3, h4 { margin: 0; color: var(--text); letter-spacing: -.025em; }
+h1 { font-size: clamp(40px, 5.6vw, 64px); font-weight: 700; line-height: 1.05; }
+h2 { font-size: clamp(32px, 4vw, 48px); font-weight: 700; line-height: 1.1; }
+h3 { font-size: 20px; font-weight: 600; line-height: 1.3; letter-spacing: -.015em; }
+h4 { font-size: 16px; font-weight: 600; }
+p  { margin: 0; color: var(--text-2); line-height: 1.6; }
+.caption { font-size: 14px; color: var(--text-2); }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 12px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase;
+  color: var(--accent-text);
+}
+.eyebrow::before {
+  content: ""; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 0 4px var(--accent-soft);
+}
+
+/* ───────── Buttons (48px height, full radius) ───────── */
+.btn {
+  display: inline-flex; align-items: center; gap: var(--sp-sm);
+  height: 48px; padding: 0 24px;
+  border-radius: var(--r-full);
+  font-size: 15px; font-weight: 600; letter-spacing: -.005em;
+  border: 1px solid transparent; cursor: pointer;
+  transition: transform .18s ease, background-color .18s ease, border-color .18s ease, box-shadow .25s ease;
+  white-space: nowrap;
+}
+.btn-primary {
+  background: var(--accent); color: var(--white);
+  box-shadow: 0 6px 18px -6px rgba(57,182,94,.4);
+}
+.btn-primary:hover {
+  background: var(--primary-700);
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 8px rgba(57,182,94,.12), 0 6px 18px -4px rgba(57,182,94,.5);
+}
+.btn-secondary {
+  background: transparent; color: var(--text);
+  border: 1px solid var(--border-strong);
+}
+.btn-secondary:hover { background: var(--surface-2); border-color: var(--accent); transform: translateY(-2px); }
+.btn-ghost { background: transparent; color: var(--text-2); padding: 0 12px; }
+.btn-ghost:hover { color: var(--text); }
+.btn-dark { background: var(--primary-900); color: var(--white); }
+.btn-dark:hover { background: var(--accent); transform: translateY(-2px); }
+
+/* ───────── Pills / Badges ───────── */
+.pill {
+  display: inline-flex; align-items: center; gap: var(--sp-sm);
+  padding: 6px 14px; border-radius: var(--r-full);
+  font-size: 13px; font-weight: 500;
+  background: var(--surface-2); color: var(--text-2);
+  border: 1px solid var(--border);
+}
+.pill .dot { width: 8px; height: 8px; border-radius: 999px; background: var(--accent); }
+.pill.online .dot { background: var(--accent); animation: pulse 2s infinite; }
+.pill.online { color: var(--accent-text); background: var(--accent-soft); border-color: color-mix(in oklab, var(--accent) 20%, transparent); }
+.pill.dark { background: var(--neutral-900); color: var(--white); border-color: transparent; }
+
+/* ───────── Cards ───────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--sp-xl);
+  transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+}
+.card:hover { border-color: var(--border-strong); box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.card-dark {
+  background: var(--primary-900); color: var(--white); border-color: transparent;
+}
+.card-dark p { color: rgba(255,255,255,.7); }
+.card-interactive { cursor: pointer; }
+.card-interactive:hover { border-color: var(--accent); }
+
+/* ───────── Section rhythm ───────── */
+section { padding: var(--sp-2xl) 0; }
+section.lg { padding: 96px 0 96px; }
+section.xl { padding: 120px 0; }
+@media (max-width: 720px) { section, section.lg, section.xl { padding: 64px 0; } }
+
+/* ───────── Scroll reveal ───────── */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity .9s ease, transform .9s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+/* ───────── Animations ───────── */
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(57,182,94,.55); }
+  70% { box-shadow: 0 0 0 8px rgba(57,182,94,0); }
+}
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(57,182,94,.0), 0 6px 18px -6px rgba(57,182,94,.4); }
+  50% { box-shadow: 0 0 0 10px rgba(57,182,94,.15), 0 6px 18px -6px rgba(57,182,94,.4); }
+}
+
+/* ───────── Grid utility ───────── */
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-lg); }
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-2xl); }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--sp-lg); }
+@media (max-width: 920px) {
+  .grid-3 { grid-template-columns: repeat(2, 1fr) !important; }
+  .grid-4 { grid-template-columns: repeat(2, 1fr) !important; }
+  .grid-2 { grid-template-columns: 1fr !important; gap: var(--sp-xl); }
+}
+@media (max-width: 560px) {
+  .grid-3, .grid-4 { grid-template-columns: 1fr !important; }
+}
+
+/* ───────── Logo slot ───────── */
+.logo-slot { display: inline-flex; align-items: center; gap: 10px; }
+.logo-slot .brand-logo { display: block; }
+.logo-slot.dark-logo .brand-logo { filter: brightness(0) invert(1); }
+
+/* ───────── Accessibility ───────── */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+/* Hide scrollbar but allow scroll */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { scrollbar-width: none; }
+
+/* Grid background utility */
+.divider-grid {
+  background-image:
+    linear-gradient(var(--border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+  background-size: 56px 56px;
+}
+.noise::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .04;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+}
+
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin></script>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+
+// tweaks-panel.jsx
+// Reusable Tweaks shell + form-control helpers.
+//
+// Owns the host protocol (listens for __activate_edit_mode / __deactivate_edit_mode,
+// posts __edit_mode_available / __edit_mode_set_keys / __edit_mode_dismissed) so
+// individual prototypes don't re-roll it. Ships a consistent set of controls so you
+// don't hand-draw <input type="range">, segmented radios, steppers, etc.
+//
+// Usage (in an HTML file that loads React + Babel):
+//
+//   const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+//     "primaryColor": "#D97757",
+//     "palette": ["#D97757", "#29261b", "#f6f4ef"],
+//     "fontSize": 16,
+//     "density": "regular",
+//     "dark": false
+//   }/*EDITMODE-END*/;
+//
+//   function App() {
+//     const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+//     return (
+//       <div style={{ fontSize: t.fontSize, color: t.primaryColor }}>
+//         Hello
+//         <TweaksPanel>
+//           <TweakSection label="Typography" />
+//           <TweakSlider label="Font size" value={t.fontSize} min={10} max={32} unit="px"
+//                        onChange={(v) => setTweak('fontSize', v)} />
+//           <TweakRadio  label="Density" value={t.density}
+//                        options={['compact', 'regular', 'comfy']}
+//                        onChange={(v) => setTweak('density', v)} />
+//           <TweakSection label="Theme" />
+//           <TweakColor  label="Primary" value={t.primaryColor}
+//                        options={['#D97757', '#2A6FDB', '#1F8A5B', '#7A5AE0']}
+//                        onChange={(v) => setTweak('primaryColor', v)} />
+//           <TweakColor  label="Palette" value={t.palette}
+//                        options={[['#D97757', '#29261b', '#f6f4ef'],
+//                                  ['#475569', '#0f172a', '#f1f5f9']]}
+//                        onChange={(v) => setTweak('palette', v)} />
+//           <TweakToggle label="Dark mode" value={t.dark}
+//                        onChange={(v) => setTweak('dark', v)} />
+//         </TweaksPanel>
+//       </div>
+//     );
+//   }
+//
+// ─────────────────────────────────────────────────────────────────────────────
+
+const __TWEAKS_STYLE = `
+  .twk-panel{position:fixed;right:16px;bottom:16px;z-index:2147483646;width:280px;
+    max-height:calc(100vh - 32px);display:flex;flex-direction:column;
+    transform:scale(var(--dc-inv-zoom,1));transform-origin:bottom right;
+    background:rgba(250,249,247,.78);color:#29261b;
+    -webkit-backdrop-filter:blur(24px) saturate(160%);backdrop-filter:blur(24px) saturate(160%);
+    border:.5px solid rgba(255,255,255,.6);border-radius:14px;
+    box-shadow:0 1px 0 rgba(255,255,255,.5) inset,0 12px 40px rgba(0,0,0,.18);
+    font:11.5px/1.4 ui-sans-serif,system-ui,-apple-system,sans-serif;overflow:hidden}
+  .twk-hd{display:flex;align-items:center;justify-content:space-between;
+    padding:10px 8px 10px 14px;cursor:move;user-select:none}
+  .twk-hd b{font-size:12px;font-weight:600;letter-spacing:.01em}
+  .twk-x{appearance:none;border:0;background:transparent;color:rgba(41,38,27,.55);
+    width:22px;height:22px;border-radius:6px;cursor:default;font-size:13px;line-height:1}
+  .twk-x:hover{background:rgba(0,0,0,.06);color:#29261b}
+  .twk-body{padding:2px 14px 14px;display:flex;flex-direction:column;gap:10px;
+    overflow-y:auto;overflow-x:hidden;min-height:0;
+    scrollbar-width:thin;scrollbar-color:rgba(0,0,0,.15) transparent}
+  .twk-body::-webkit-scrollbar{width:8px}
+  .twk-body::-webkit-scrollbar-track{background:transparent;margin:2px}
+  .twk-body::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:4px;
+    border:2px solid transparent;background-clip:content-box}
+  .twk-body::-webkit-scrollbar-thumb:hover{background:rgba(0,0,0,.25);
+    border:2px solid transparent;background-clip:content-box}
+  .twk-row{display:flex;flex-direction:column;gap:5px}
+  .twk-row-h{flex-direction:row;align-items:center;justify-content:space-between;gap:10px}
+  .twk-lbl{display:flex;justify-content:space-between;align-items:baseline;
+    color:rgba(41,38,27,.72)}
+  .twk-lbl>span:first-child{font-weight:500}
+  .twk-val{color:rgba(41,38,27,.5);font-variant-numeric:tabular-nums}
+
+  .twk-sect{font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+    color:rgba(41,38,27,.45);padding:10px 0 0}
+  .twk-sect:first-child{padding-top:0}
+
+  .twk-field{appearance:none;box-sizing:border-box;width:100%;min-width:0;height:26px;padding:0 8px;
+    border:.5px solid rgba(0,0,0,.1);border-radius:7px;
+    background:rgba(255,255,255,.6);color:inherit;font:inherit;outline:none}
+  .twk-field:focus{border-color:rgba(0,0,0,.25);background:rgba(255,255,255,.85)}
+  select.twk-field{padding-right:22px;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='rgba(0,0,0,.5)' d='M0 0h10L5 6z'/></svg>");
+    background-repeat:no-repeat;background-position:right 8px center}
+
+  .twk-slider{appearance:none;-webkit-appearance:none;width:100%;height:4px;margin:6px 0;
+    border-radius:999px;background:rgba(0,0,0,.12);outline:none}
+  .twk-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;
+    width:14px;height:14px;border-radius:50%;background:#fff;
+    border:.5px solid rgba(0,0,0,.12);box-shadow:0 1px 3px rgba(0,0,0,.2);cursor:default}
+  .twk-slider::-moz-range-thumb{width:14px;height:14px;border-radius:50%;
+    background:#fff;border:.5px solid rgba(0,0,0,.12);box-shadow:0 1px 3px rgba(0,0,0,.2);cursor:default}
+
+  .twk-seg{position:relative;display:flex;padding:2px;border-radius:8px;
+    background:rgba(0,0,0,.06);user-select:none}
+  .twk-seg-thumb{position:absolute;top:2px;bottom:2px;border-radius:6px;
+    background:rgba(255,255,255,.9);box-shadow:0 1px 2px rgba(0,0,0,.12);
+    transition:left .15s cubic-bezier(.3,.7,.4,1),width .15s}
+  .twk-seg.dragging .twk-seg-thumb{transition:none}
+  .twk-seg button{appearance:none;position:relative;z-index:1;flex:1;border:0;
+    background:transparent;color:inherit;font:inherit;font-weight:500;min-height:22px;
+    border-radius:6px;cursor:default;padding:4px 6px;line-height:1.2;
+    overflow-wrap:anywhere}
+
+  .twk-toggle{position:relative;width:32px;height:18px;border:0;border-radius:999px;
+    background:rgba(0,0,0,.15);transition:background .15s;cursor:default;padding:0}
+  .twk-toggle[data-on="1"]{background:#34c759}
+  .twk-toggle i{position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;
+    background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .15s}
+  .twk-toggle[data-on="1"] i{transform:translateX(14px)}
+
+  .twk-num{display:flex;align-items:center;box-sizing:border-box;min-width:0;height:26px;padding:0 0 0 8px;
+    border:.5px solid rgba(0,0,0,.1);border-radius:7px;background:rgba(255,255,255,.6)}
+  .twk-num-lbl{font-weight:500;color:rgba(41,38,27,.6);cursor:ew-resize;
+    user-select:none;padding-right:8px}
+  .twk-num input{flex:1;min-width:0;height:100%;border:0;background:transparent;
+    font:inherit;font-variant-numeric:tabular-nums;text-align:right;padding:0 8px 0 0;
+    outline:none;color:inherit;-moz-appearance:textfield}
+  .twk-num input::-webkit-inner-spin-button,.twk-num input::-webkit-outer-spin-button{
+    -webkit-appearance:none;margin:0}
+  .twk-num-unit{padding-right:8px;color:rgba(41,38,27,.45)}
+
+  .twk-btn{appearance:none;height:26px;padding:0 12px;border:0;border-radius:7px;
+    background:rgba(0,0,0,.78);color:#fff;font:inherit;font-weight:500;cursor:default}
+  .twk-btn:hover{background:rgba(0,0,0,.88)}
+  .twk-btn.secondary{background:rgba(0,0,0,.06);color:inherit}
+  .twk-btn.secondary:hover{background:rgba(0,0,0,.1)}
+
+  .twk-swatch{appearance:none;-webkit-appearance:none;width:56px;height:22px;
+    border:.5px solid rgba(0,0,0,.1);border-radius:6px;padding:0;cursor:default;
+    background:transparent;flex-shrink:0}
+  .twk-swatch::-webkit-color-swatch-wrapper{padding:0}
+  .twk-swatch::-webkit-color-swatch{border:0;border-radius:5.5px}
+  .twk-swatch::-moz-color-swatch{border:0;border-radius:5.5px}
+
+  .twk-chips{display:flex;gap:6px}
+  .twk-chip{position:relative;appearance:none;flex:1;min-width:0;height:46px;
+    padding:0;border:0;border-radius:6px;overflow:hidden;cursor:default;
+    box-shadow:0 0 0 .5px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.06);
+    transition:transform .12s cubic-bezier(.3,.7,.4,1),box-shadow .12s}
+  .twk-chip:hover{transform:translateY(-1px);
+    box-shadow:0 0 0 .5px rgba(0,0,0,.18),0 4px 10px rgba(0,0,0,.12)}
+  .twk-chip[data-on="1"]{box-shadow:0 0 0 1.5px rgba(0,0,0,.85),
+    0 2px 6px rgba(0,0,0,.15)}
+  .twk-chip>span{position:absolute;top:0;bottom:0;right:0;width:34%;
+    display:flex;flex-direction:column;box-shadow:-1px 0 0 rgba(0,0,0,.1)}
+  .twk-chip>span>i{flex:1;box-shadow:0 -1px 0 rgba(0,0,0,.1)}
+  .twk-chip>span>i:first-child{box-shadow:none}
+  .twk-chip svg{position:absolute;top:6px;left:6px;width:13px;height:13px;
+    filter:drop-shadow(0 1px 1px rgba(0,0,0,.3))}
+`;
+
+// ── useTweaks ───────────────────────────────────────────────────────────────
+// Single source of truth for tweak values. setTweak persists via the host
+// (__edit_mode_set_keys → host rewrites the EDITMODE block on disk).
+function useTweaks(defaults) {
+  const [values, setValues] = React.useState(defaults);
+  // Accepts either setTweak('key', value) or setTweak({ key: value, ... }) so a
+  // useState-style call doesn't write a "[object Object]" key into the persisted
+  // JSON block.
+  const setTweak = React.useCallback((keyOrEdits, val) => {
+    const edits = typeof keyOrEdits === 'object' && keyOrEdits !== null
+      ? keyOrEdits : { [keyOrEdits]: val };
+    setValues((prev) => ({ ...prev, ...edits }));
+    window.parent.postMessage({ type: '__edit_mode_set_keys', edits }, '*');
+    // Same-window signal so in-page listeners (deck-stage rail thumbnails)
+    // can react — the parent message only reaches the host, not peers.
+    window.dispatchEvent(new CustomEvent('tweakchange', { detail: edits }));
+  }, []);
+  return [values, setTweak];
+}
+
+// ── TweaksPanel ─────────────────────────────────────────────────────────────
+// Floating shell. Registers the protocol listener BEFORE announcing
+// availability — if the announce ran first, the host's activate could land
+// before our handler exists and the toolbar toggle would silently no-op.
+// The close button posts __edit_mode_dismissed so the host's toolbar toggle
+// flips off in lockstep; the host echoes __deactivate_edit_mode back which
+// is what actually hides the panel.
+function TweaksPanel({ title = 'Tweaks', noDeckControls = false, children }) {
+  const [open, setOpen] = React.useState(false);
+  const dragRef = React.useRef(null);
+  // Auto-inject a rail toggle when a <deck-stage> is on the page. The
+  // toggle drives the deck's per-viewer _railVisible via window message;
+  // state is mirrored from the same localStorage key the deck reads so
+  // the control reflects reality across reloads. The mechanism is the
+  // message — authors who want custom placement can post it directly
+  // and pass noDeckControls to suppress this one.
+  const hasDeckStage = React.useMemo(
+    () => typeof document !== 'undefined' && !!document.querySelector('deck-stage'),
+    [],
+  );
+  // deck-stage enables its rail in connectedCallback, but this panel can
+  // mount before that element has upgraded. The initial read catches the
+  // common case; the listener covers mounting first. (Older deck-stage.js
+  // copies still wait for the host's __omelette_rail_enabled postMessage —
+  // same listener handles those.)
+  const [railEnabled, setRailEnabled] = React.useState(
+    () => hasDeckStage && !!document.querySelector('deck-stage')?._railEnabled,
+  );
+  React.useEffect(() => {
+    if (!hasDeckStage || railEnabled) return undefined;
+    const onMsg = (e) => {
+      if (e.data && e.data.type === '__omelette_rail_enabled') setRailEnabled(true);
+    };
+    window.addEventListener('message', onMsg);
+    return () => window.removeEventListener('message', onMsg);
+  }, [hasDeckStage, railEnabled]);
+  const [railVisible, setRailVisible] = React.useState(() => {
+    try { return localStorage.getItem('deck-stage.railVisible') !== '0'; } catch (e) { return true; }
+  });
+  const toggleRail = (on) => {
+    setRailVisible(on);
+    window.postMessage({ type: '__deck_rail_visible', on }, '*');
+  };
+  const offsetRef = React.useRef({ x: 16, y: 16 });
+  const PAD = 16;
+
+  const clampToViewport = React.useCallback(() => {
+    const panel = dragRef.current;
+    if (!panel) return;
+    const w = panel.offsetWidth, h = panel.offsetHeight;
+    const maxRight = Math.max(PAD, window.innerWidth - w - PAD);
+    const maxBottom = Math.max(PAD, window.innerHeight - h - PAD);
+    offsetRef.current = {
+      x: Math.min(maxRight, Math.max(PAD, offsetRef.current.x)),
+      y: Math.min(maxBottom, Math.max(PAD, offsetRef.current.y)),
+    };
+    panel.style.right = offsetRef.current.x + 'px';
+    panel.style.bottom = offsetRef.current.y + 'px';
+  }, []);
+
+  React.useEffect(() => {
+    if (!open) return;
+    clampToViewport();
+    if (typeof ResizeObserver === 'undefined') {
+      window.addEventListener('resize', clampToViewport);
+      return () => window.removeEventListener('resize', clampToViewport);
+    }
+    const ro = new ResizeObserver(clampToViewport);
+    ro.observe(document.documentElement);
+    return () => ro.disconnect();
+  }, [open, clampToViewport]);
+
+  React.useEffect(() => {
+    const onMsg = (e) => {
+      const t = e?.data?.type;
+      if (t === '__activate_edit_mode') setOpen(true);
+      else if (t === '__deactivate_edit_mode') setOpen(false);
+    };
+    window.addEventListener('message', onMsg);
+    window.parent.postMessage({ type: '__edit_mode_available' }, '*');
+    return () => window.removeEventListener('message', onMsg);
+  }, []);
+
+  const dismiss = () => {
+    setOpen(false);
+    window.parent.postMessage({ type: '__edit_mode_dismissed' }, '*');
+  };
+
+  const onDragStart = (e) => {
+    const panel = dragRef.current;
+    if (!panel) return;
+    const r = panel.getBoundingClientRect();
+    const sx = e.clientX, sy = e.clientY;
+    const startRight = window.innerWidth - r.right;
+    const startBottom = window.innerHeight - r.bottom;
+    const move = (ev) => {
+      offsetRef.current = {
+        x: startRight - (ev.clientX - sx),
+        y: startBottom - (ev.clientY - sy),
+      };
+      clampToViewport();
+    };
+    const up = () => {
+      window.removeEventListener('mousemove', move);
+      window.removeEventListener('mouseup', up);
+    };
+    window.addEventListener('mousemove', move);
+    window.addEventListener('mouseup', up);
+  };
+
+  if (!open) return null;
+  return (
+    <>
+      <style>{__TWEAKS_STYLE}</style>
+      <div ref={dragRef} className="twk-panel" data-noncommentable=""
+           style={{ right: offsetRef.current.x, bottom: offsetRef.current.y }}>
+        <div className="twk-hd" onMouseDown={onDragStart}>
+          <b>{title}</b>
+          <button className="twk-x" aria-label="Close tweaks"
+                  onMouseDown={(e) => e.stopPropagation()}
+                  onClick={dismiss}>✕</button>
+        </div>
+        <div className="twk-body">
+          {children}
+          {hasDeckStage && railEnabled && !noDeckControls && (
+            <TweakSection label="Deck">
+              <TweakToggle label="Thumbnail rail" value={railVisible} onChange={toggleRail} />
+            </TweakSection>
+          )}
+        </div>
+      </div>
+    </>
+  );
+}
+
+// ── Layout helpers ──────────────────────────────────────────────────────────
+
+function TweakSection({ label, children }) {
+  return (
+    <>
+      <div className="twk-sect">{label}</div>
+      {children}
+    </>
+  );
+}
+
+function TweakRow({ label, value, children, inline = false }) {
+  return (
+    <div className={inline ? 'twk-row twk-row-h' : 'twk-row'}>
+      <div className="twk-lbl">
+        <span>{label}</span>
+        {value != null && <span className="twk-val">{value}</span>}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+// ── Controls ────────────────────────────────────────────────────────────────
+
+function TweakSlider({ label, value, min = 0, max = 100, step = 1, unit = '', onChange }) {
+  return (
+    <TweakRow label={label} value={`${value}${unit}`}>
+      <input type="range" className="twk-slider" min={min} max={max} step={step}
+             value={value} onChange={(e) => onChange(Number(e.target.value))} />
+    </TweakRow>
+  );
+}
+
+function TweakToggle({ label, value, onChange }) {
+  return (
+    <div className="twk-row twk-row-h">
+      <div className="twk-lbl"><span>{label}</span></div>
+      <button type="button" className="twk-toggle" data-on={value ? '1' : '0'}
+              role="switch" aria-checked={!!value}
+              onClick={() => onChange(!value)}><i /></button>
+    </div>
+  );
+}
+
+function TweakRadio({ label, value, options, onChange }) {
+  const trackRef = React.useRef(null);
+  const [dragging, setDragging] = React.useState(false);
+  // The active value is read by pointer-move handlers attached for the lifetime
+  // of a drag — ref it so a stale closure doesn't fire onChange for every move.
+  const valueRef = React.useRef(value);
+  valueRef.current = value;
+
+  // Segments wrap mid-word once per-segment width runs out. The track is
+  // ~248px (280 panel − 28 body pad − 4 seg pad), each button loses 12px
+  // to its own padding, and 11.5px system-ui averages ~6.3px/char — so 2
+  // options fit ~16 chars each, 3 fit ~10. Past that (or >3 options), fall
+  // back to a dropdown rather than wrap.
+  const labelLen = (o) => String(typeof o === 'object' ? o.label : o).length;
+  const maxLen = options.reduce((m, o) => Math.max(m, labelLen(o)), 0);
+  const fitsAsSegments = maxLen <= ({ 2: 16, 3: 10 }[options.length] ?? 0);
+  if (!fitsAsSegments) {
+    // <select> emits strings — map back to the original option value so the
+    // fallback stays type-preserving (numbers, booleans) like the segment path.
+    const resolve = (s) => {
+      const m = options.find((o) => String(typeof o === 'object' ? o.value : o) === s);
+      return m === undefined ? s : typeof m === 'object' ? m.value : m;
+    };
+    return <TweakSelect label={label} value={value} options={options}
+                        onChange={(s) => onChange(resolve(s))} />;
+  }
+  const opts = options.map((o) => (typeof o === 'object' ? o : { value: o, label: o }));
+  const idx = Math.max(0, opts.findIndex((o) => o.value === value));
+  const n = opts.length;
+
+  const segAt = (clientX) => {
+    const r = trackRef.current.getBoundingClientRect();
+    const inner = r.width - 4;
+    const i = Math.floor(((clientX - r.left - 2) / inner) * n);
+    return opts[Math.max(0, Math.min(n - 1, i))].value;
+  };
+
+  const onPointerDown = (e) => {
+    setDragging(true);
+    const v0 = segAt(e.clientX);
+    if (v0 !== valueRef.current) onChange(v0);
+    const move = (ev) => {
+      if (!trackRef.current) return;
+      const v = segAt(ev.clientX);
+      if (v !== valueRef.current) onChange(v);
+    };
+    const up = () => {
+      setDragging(false);
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+  };
+
+  return (
+    <TweakRow label={label}>
+      <div ref={trackRef} role="radiogroup" onPointerDown={onPointerDown}
+           className={dragging ? 'twk-seg dragging' : 'twk-seg'}>
+        <div className="twk-seg-thumb"
+             style={{ left: `calc(2px + ${idx} * (100% - 4px) / ${n})`,
+                      width: `calc((100% - 4px) / ${n})` }} />
+        {opts.map((o) => (
+          <button key={o.value} type="button" role="radio" aria-checked={o.value === value}>
+            {o.label}
+          </button>
+        ))}
+      </div>
+    </TweakRow>
+  );
+}
+
+function TweakSelect({ label, value, options, onChange }) {
+  return (
+    <TweakRow label={label}>
+      <select className="twk-field" value={value} onChange={(e) => onChange(e.target.value)}>
+        {options.map((o) => {
+          const v = typeof o === 'object' ? o.value : o;
+          const l = typeof o === 'object' ? o.label : o;
+          return <option key={v} value={v}>{l}</option>;
+        })}
+      </select>
+    </TweakRow>
+  );
+}
+
+function TweakText({ label, value, placeholder, onChange }) {
+  return (
+    <TweakRow label={label}>
+      <input className="twk-field" type="text" value={value} placeholder={placeholder}
+             onChange={(e) => onChange(e.target.value)} />
+    </TweakRow>
+  );
+}
+
+function TweakNumber({ label, value, min, max, step = 1, unit = '', onChange }) {
+  const clamp = (n) => {
+    if (min != null && n < min) return min;
+    if (max != null && n > max) return max;
+    return n;
+  };
+  const startRef = React.useRef({ x: 0, val: 0 });
+  const onScrubStart = (e) => {
+    e.preventDefault();
+    startRef.current = { x: e.clientX, val: value };
+    const decimals = (String(step).split('.')[1] || '').length;
+    const move = (ev) => {
+      const dx = ev.clientX - startRef.current.x;
+      const raw = startRef.current.val + dx * step;
+      const snapped = Math.round(raw / step) * step;
+      onChange(clamp(Number(snapped.toFixed(decimals))));
+    };
+    const up = () => {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+    };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+  };
+  return (
+    <div className="twk-num">
+      <span className="twk-num-lbl" onPointerDown={onScrubStart}>{label}</span>
+      <input type="number" value={value} min={min} max={max} step={step}
+             onChange={(e) => onChange(clamp(Number(e.target.value)))} />
+      {unit && <span className="twk-num-unit">{unit}</span>}
+    </div>
+  );
+}
+
+// Relative-luminance contrast pick — checkmarks drawn over a swatch need to
+// read on both #111 and #fafafa without per-option configuration. Hex input
+// only (#rgb / #rrggbb); named or rgb()/hsl() colors fall through to "light".
+function __twkIsLight(hex) {
+  const h = String(hex).replace('#', '');
+  const x = h.length === 3 ? h.replace(/./g, (c) => c + c) : h.padEnd(6, '0');
+  const n = parseInt(x.slice(0, 6), 16);
+  if (Number.isNaN(n)) return true;
+  const r = (n >> 16) & 255, g = (n >> 8) & 255, b = n & 255;
+  return r * 299 + g * 587 + b * 114 > 148000;
+}
+
+const __TwkCheck = ({ light }) => (
+  <svg viewBox="0 0 14 14" aria-hidden="true">
+    <path d="M3 7.2 5.8 10 11 4.2" fill="none" strokeWidth="2.2"
+          strokeLinecap="round" strokeLinejoin="round"
+          stroke={light ? 'rgba(0,0,0,.78)' : '#fff'} />
+  </svg>
+);
+
+// TweakColor — curated color/palette picker. Each option is either a single
+// hex string or an array of 1-5 hex strings; the card adapts — a lone color
+// renders solid, a palette renders colors[0] as the hero (left ~2/3) with the
+// rest stacked in a sharp column on the right. onChange emits the
+// option in the shape it was passed (string stays string, array stays array).
+// Without options it falls back to the native color input for back-compat.
+function TweakColor({ label, value, options, onChange }) {
+  if (!options || !options.length) {
+    return (
+      <div className="twk-row twk-row-h">
+        <div className="twk-lbl"><span>{label}</span></div>
+        <input type="color" className="twk-swatch" value={value}
+               onChange={(e) => onChange(e.target.value)} />
+      </div>
+    );
+  }
+  // Native <input type=color> emits lowercase hex per the HTML spec, so
+  // compare case-insensitively. String() guards JSON.stringify(undefined),
+  // which returns the primitive undefined (no .toLowerCase).
+  const key = (o) => String(JSON.stringify(o)).toLowerCase();
+  const cur = key(value);
+  return (
+    <TweakRow label={label}>
+      <div className="twk-chips" role="radiogroup">
+        {options.map((o, i) => {
+          const colors = Array.isArray(o) ? o : [o];
+          const [hero, ...rest] = colors;
+          const sup = rest.slice(0, 4);
+          const on = key(o) === cur;
+          return (
+            <button key={i} type="button" className="twk-chip" role="radio"
+                    aria-checked={on} data-on={on ? '1' : '0'}
+                    aria-label={colors.join(', ')} title={colors.join(' · ')}
+                    style={{ background: hero }}
+                    onClick={() => onChange(o)}>
+              {sup.length > 0 && (
+                <span>
+                  {sup.map((c, j) => <i key={j} style={{ background: c }} />)}
+                </span>
+              )}
+              {on && <__TwkCheck light={__twkIsLight(hero)} />}
+            </button>
+          );
+        })}
+      </div>
+    </TweakRow>
+  );
+}
+
+function TweakButton({ label, onClick, secondary = false }) {
+  return (
+    <button type="button" className={secondary ? 'twk-btn secondary' : 'twk-btn'}
+            onClick={onClick}>{label}</button>
+  );
+}
+
+Object.assign(window, {
+  useTweaks, TweaksPanel, TweakSection, TweakRow,
+  TweakSlider, TweakToggle, TweakRadio, TweakSelect,
+  TweakText, TweakNumber, TweakColor, TweakButton,
+});
+
+</script>
+<script type="text/babel">
+/* shared/common.jsx — Nav, Footer, scroll reveal, theme + accent tweaks
+   Globals exported: useReveal, ThemeToggle, Reveal, SiteNav, SiteFooter,
+                     ScrollPill, AccentDot, applyAccent, ICONS                          */
+
+const { useEffect, useRef, useState, useCallback } = React;
+
+/* ───────── Scroll reveal observer ───────── */
+function useReveal() {
+  useEffect(() => {
+    const observed = new WeakSet();
+    const attach = () => {
+      const els = document.querySelectorAll(".reveal:not(.in)");
+      els.forEach(el => { if (!observed.has(el)) { observed.add(el); io.observe(el); } });
+    };
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+    }, { threshold: 0.08, rootMargin: "0px 0px -5% 0px" });
+    attach();
+    // Re-scan after a tick for late-mounted nodes
+    const t1 = setTimeout(attach, 80);
+    const t2 = setTimeout(attach, 400);
+    return () => { clearTimeout(t1); clearTimeout(t2); io.disconnect(); };
+  }, []);
+}
+function Reveal({ children, delay=0, as:Tag="div", ...rest }) {
+  return <Tag className={(rest.className||"") + " reveal"} style={{ transitionDelay: delay+"ms", ...(rest.style||{}) }} {...rest}>{children}</Tag>;
+}
+
+/* ───────── Accent application ───────── */
+function applyAccent(hex) {
+  const root = document.documentElement;
+  root.style.setProperty("--accent", hex);
+  // derive hover/soft/text from hex (basic darken/lighten)
+  const { r,g,b } = hexToRgb(hex);
+  const hover = rgbToHex(r*0.82, g*0.82, b*0.92);
+  const soft  = rgbToHex(r + (255-r)*0.88, g + (255-g)*0.88, b + (255-b)*0.88);
+  const text  = rgbToHex(r*0.55, g*0.5, b*0.85);
+  root.style.setProperty("--accent-hover", hover);
+  root.style.setProperty("--accent-soft", soft);
+  root.style.setProperty("--accent-text", text);
+}
+function hexToRgb(h) {
+  h = h.replace("#",""); if (h.length===3) h = h.split("").map(c=>c+c).join("");
+  return { r: parseInt(h.slice(0,2),16), g: parseInt(h.slice(2,4),16), b: parseInt(h.slice(4,6),16) };
+}
+function rgbToHex(r,g,b){const c=v=>Math.max(0,Math.min(255,Math.round(v))).toString(16).padStart(2,"0");return "#"+c(r)+c(g)+c(b);}
+
+function applyTheme(dark) {
+  document.documentElement.setAttribute("data-theme", dark ? "dark" : "light");
+}
+
+/* ───────── Theme toggle button ───────── */
+function ThemeToggle({ dark, onToggle }) {
+  return (
+    <button
+      onClick={onToggle}
+      aria-label="Alternar tema"
+      style={{
+        width: 36, height: 36, borderRadius: 999,
+        background: "var(--surface)",
+        border: "1px solid var(--border)",
+        color: "var(--text)",
+        display: "inline-flex", alignItems: "center", justifyContent: "center",
+        cursor: "pointer", transition: "all .2s ease",
+      }}
+      onMouseOver={e => e.currentTarget.style.background = "var(--surface-2)"}
+      onMouseOut={e => e.currentTarget.style.background = "var(--surface)"}
+    >
+      {dark ? (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+          <circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+        </svg>
+      ) : (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/>
+        </svg>
+      )}
+    </button>
+  );
+}
+
+/* ───────── Site Navigation ───────── */
+function SiteNav({ brand, navItems, ctaLabel="Acessar plataforma", dark, onToggleTheme, ctaHref="#cta" }) {
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 24);
+    fn(); window.addEventListener("scroll", fn, { passive: true });
+    return () => window.removeEventListener("scroll", fn);
+  }, []);
+  return (
+    <header style={{
+      position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000,
+      backdropFilter: scrolled ? "blur(14px) saturate(160%)" : "none",
+      WebkitBackdropFilter: scrolled ? "blur(14px) saturate(160%)" : "none",
+      background: scrolled ? "color-mix(in oklab, var(--bg) 80%, transparent)" : "transparent",
+      borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent",
+      transition: "all .25s ease",
+    }}>
+      <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 32px", maxWidth: 1280 }}>
+        <a href="#" className={"logo-slot " + (dark ? "dark-logo" : "")} data-logo-slot={brand.key}>
+          {brand.logo
+            ? <img src={brand.logo} alt={brand.wordmark} style={{ height: brand.logoHeight || 32, width: "auto", display: "block" }} className="brand-logo"/>
+            : <span style={{ fontWeight: 700, fontSize: 18, color: "var(--text)" }}>{brand.wordmark}</span>}
+        </a>
+        <nav className="nav-desktop" style={{ display: "flex", gap: 28, alignItems: "center" }}>
+          {navItems.map(item => (
+            <a key={item} href={`#${slug(item)}`} style={{
+              fontSize: 13.5, color: "var(--text-2)", fontWeight: 450, letterSpacing: "-.005em",
+              transition: "color .15s",
+            }}
+            onMouseOver={e => e.currentTarget.style.color = "var(--text)"}
+            onMouseOut={e => e.currentTarget.style.color = "var(--text-2)"}>{item}</a>
+          ))}
+        </nav>
+        <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+          <ThemeToggle dark={dark} onToggle={onToggleTheme} />
+          <a href={ctaHref} className="btn btn-primary nav-cta" style={{ height: 40, fontSize: 14 }}>{ctaLabel} <span aria-hidden>→</span></a>
+          <button className="nav-hamburger" aria-label="Menu"
+            onClick={() => setOpen(o => !o)}
+            style={{
+              display: "none", background: "transparent", border: "1px solid var(--border)",
+              width: 36, height: 36, borderRadius: 999, padding: 0, cursor: "pointer"
+            }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d={open ? "M6 6l12 12M6 18L18 6" : "M3 6h18M3 12h18M3 18h18"}/></svg>
+          </button>
+        </div>
+      </div>
+      {open && (
+        <div className="nav-mobile-panel" style={{
+          background: "var(--surface)", borderTop: "1px solid var(--border)", padding: "16px 24px"
+        }}>
+          {navItems.map(it => (
+            <a key={it} href={`#${slug(it)}`} onClick={() => setOpen(false)}
+              style={{ display: "block", padding: "10px 0", color: "var(--text)" }}>{it}</a>
+          ))}
+        </div>
+      )}
+      <style>{`
+        @media (max-width: 920px) {
+          .nav-desktop { display: none !important; }
+          .nav-cta { display: none !important; }
+          .nav-hamburger { display: inline-flex !important; align-items: center; justify-content: center; color: var(--text); }
+        }
+      `}</style>
+    </header>
+  );
+}
+
+function slug(s){return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,"");}
+
+/* ───────── Footer ───────── */
+function SiteFooter({ brand, tagline, blurb, columns, version, motto }) {
+  return (
+    <footer style={{ background: "var(--primary-900)", color: "#fff", padding: "80px 0 32px", position: "relative", overflow: "hidden" }}>
+      <div className="container" style={{ position: "relative" }}>
+        <div style={{ fontSize: "clamp(28px,3.5vw,44px)", lineHeight: 1.15, maxWidth: 880, marginBottom: 56, fontWeight: 600, letterSpacing: "-.02em", color: "#fff" }}>
+          {motto}
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr 1fr", gap: 48, marginBottom: 56 }} className="footer-grid">
+          <div>
+            <div className="logo-slot dark-logo" data-logo-slot={brand.key} style={{ marginBottom: 16 }}>
+              {brand.logo
+                ? <img src={brand.logo} alt={brand.wordmark} style={{ height: (brand.logoHeight || 32) + 4, width: "auto", display: "block" }} className="brand-logo"/>
+                : <span style={{ fontWeight: 700, fontSize: 20, color: "#fff" }}>{brand.wordmark}</span>}
+            </div>
+            <div style={{ fontSize: 15, color: "rgba(255,255,255,.75)", marginBottom: 14, fontWeight: 500 }}>{tagline}</div>
+            <p style={{ fontSize: 13.5, color: "rgba(255,255,255,.55)", maxWidth: 360, lineHeight: 1.6 }}>{blurb}</p>
+            <div style={{ marginTop: 20, display: "flex", gap: 12, alignItems: "center", flexWrap: "wrap" }}>
+              <span style={{ display: "inline-flex", alignItems: "center", gap: 8, fontSize: 12, color: "rgba(255,255,255,.7)" }}>
+                <span style={{ width: 8, height: 8, borderRadius: 999, background: "var(--primary-500)", boxShadow: "0 0 0 4px rgba(57,182,94,.15)" }}/> Governo de Goiás
+              </span>
+              <span style={{ fontSize: 12, color: "rgba(255,255,255,.3)" }}>·</span>
+              <span style={{ fontSize: 12, color: "rgba(255,255,255,.7)" }}>SGG · Secretaria-Geral</span>
+            </div>
+          </div>
+          {columns.map(col => (
+            <div key={col.title}>
+              <div className="mono" style={{ fontSize: 11, letterSpacing: ".12em", textTransform: "uppercase", color: "rgba(255,255,255,.45)", marginBottom: 16, fontWeight: 600 }}>
+                {col.title}
+              </div>
+              <ul style={{ listStyle: "none", padding: 0, margin: 0, display: "flex", flexDirection: "column", gap: 10 }}>
+                {col.items.map(it => (
+                  <li key={it} style={{ fontSize: 13.5, color: "rgba(255,255,255,.7)" }}>
+                    <a href="#" style={{ transition: "color .15s" }}
+                      onMouseOver={e => e.currentTarget.style.color = "#fff"}
+                      onMouseOut={e => e.currentTarget.style.color = "rgba(255,255,255,.7)"}>{it}</a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+        <div style={{ borderTop: "1px solid rgba(255,255,255,.08)", paddingTop: 24, display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 16, fontSize: 12, color: "rgba(255,255,255,.5)" }}>
+          <span>© 2026 Governo do Estado de Goiás · REDE TIC — Design Visual / STI</span>
+          <span style={{ display: "flex", gap: 18, flexWrap: "wrap" }}>
+            <a href="#">Privacidade</a><a href="#">Acessibilidade</a><a href="#">Transparência</a>
+            <span className="mono" style={{ color: "var(--primary-300)" }}>{version}</span>
+          </span>
+        </div>
+      </div>
+      <style>{`
+        @media (max-width: 920px) {
+          .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 36px !important; }
+        }
+        @media (max-width: 560px) {
+          .footer-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
+    </footer>
+  );
+}
+
+/* ───────── Icon set (small geometric, mono-weight) ───────── */
+const ICONS = {
+  spark: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M12 3v6M12 15v6M3 12h6M15 12h6M5.6 5.6l4.2 4.2M14.2 14.2l4.2 4.2M5.6 18.4l4.2-4.2M14.2 9.8l4.2-4.2"/></svg>,
+  doc: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9zM14 3v6h6M8 13h8M8 17h6"/></svg>,
+  shield: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M12 3l8 3v6c0 4.5-3.4 8.7-8 9-4.6-.3-8-4.5-8-9V6l8-3z"/><path d="M9 12l2 2 4-4"/></svg>,
+  graph: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><circle cx="6" cy="6" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8 6h8M6 8v8M18 8v8M8 18h8"/></svg>,
+  bolt: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg>,
+  chat: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M21 12a8 8 0 0 1-12.3 6.8L4 20l1.2-4.7A8 8 0 1 1 21 12z"/></svg>,
+  branch: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><circle cx="6" cy="4" r="2"/><circle cx="6" cy="20" r="2"/><circle cx="18" cy="12" r="2"/><path d="M6 6v12M6 12h6a4 4 0 0 0 4-4V6"/></svg>,
+  pulse: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M3 12h4l2-7 4 14 2-7h6"/></svg>,
+  book: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M4 4h7a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H4zM20 4h-7a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h8z"/></svg>,
+  cube: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9zM12 3v9M12 21v-9M20 7.5L12 12 4 7.5"/></svg>,
+  scales: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M12 3v18M5 21h14M6 3l3 9a3 3 0 0 1-6 0zM18 3l3 9a3 3 0 0 1-6 0z"/></svg>,
+  layers: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M12 3l9 5-9 5-9-5zM3 13l9 5 9-5M3 18l9 5 9-5"/></svg>,
+  compass: (p) => <svg {...p} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.5l-2 5.5-5.5 2 2-5.5z"/></svg>,
+};
+
+Object.assign(window, { useReveal, Reveal, SiteNav, SiteFooter, ThemeToggle, applyAccent, applyTheme, ICONS, slug });
+
+</script>
+<script type="text/babel">
+/* godev/editor.jsx — Hero interactive code editor mock */
+const { useState, useEffect, useRef } = React;
+
+const FILES = {
+  "service.py": [
+    { t: "comment", s: "# GO.DEV · Padrão STI · v2.4" },
+    { t: "line", parts: [{c:"keyword",s:"from"},{c:"text",s:" godev.core "},{c:"keyword",s:"import"},{c:"text",s:" ServiceBase, AutoDoc"}] },
+    { t: "line", parts: [{c:"keyword",s:"from"},{c:"text",s:" godev.ai "},{c:"keyword",s:"import"},{c:"text",s:" ContextAgent"}] },
+    { t: "blank" },
+    { t: "line", parts: [{c:"decorator",s:"@AutoDoc"},{c:"text",s:"(source="},{c:"string",s:"\"gitlab://wiki/padroes\""},{c:"text",s:")"}] },
+    { t: "line", parts: [{c:"decorator",s:"@ContextAgent"},{c:"text",s:"(mcp="},{c:"keyword",s:"True"},{c:"text",s:")"}] },
+    { t: "line", parts: [{c:"keyword",s:"class"},{c:"text",s:" "},{c:"class",s:"CidadaoService"},{c:"text",s:"("},{c:"class",s:"ServiceBase"},{c:"text",s:"):"}] },
+    { t: "line", indent: 1, parts: [{c:"keyword",s:"async def"},{c:"text",s:" "},{c:"fn",s:"processar_solicitacao"},{c:"text",s:"(self, payload):"}] },
+    { t: "line", indent: 2, parts: [{c:"comment",s:"# IA sugere conformidade com LGPD"}] },
+    { t: "line", indent: 2, parts: [{c:"text",s:"resultado = "},{c:"keyword",s:"await"},{c:"text",s:" self."},{c:"fn",s:"validate"},{c:"text",s:"(payload)"}] },
+    { t: "line", indent: 2, parts: [{c:"keyword",s:"return"},{c:"text",s:" resultado"}], cursor: true },
+  ],
+  "models.py": [
+    { t: "comment", s: "# Modelo base · CidadaoModel" },
+    { t: "line", parts: [{c:"keyword",s:"from"},{c:"text",s:" godev.orm "},{c:"keyword",s:"import"},{c:"text",s:" Model, Field"}] },
+    { t: "blank" },
+    { t: "line", parts: [{c:"keyword",s:"class"},{c:"text",s:" "},{c:"class",s:"CidadaoModel"},{c:"text",s:"("},{c:"class",s:"Model"},{c:"text",s:"):"}] },
+    { t: "line", indent: 1, parts: [{c:"text",s:"cpf = "},{c:"fn",s:"Field"},{c:"text",s:"(str, encrypted="},{c:"keyword",s:"True"},{c:"text",s:")"}] },
+    { t: "line", indent: 1, parts: [{c:"text",s:"nome = "},{c:"fn",s:"Field"},{c:"text",s:"(str)"}] },
+    { t: "line", indent: 1, parts: [{c:"text",s:"orgao = "},{c:"fn",s:"Field"},{c:"text",s:"("},{c:"class",s:"Orgao"},{c:"text",s:")"}] },
+    { t: "blank" },
+    { t: "line", indent: 1, parts: [{c:"comment",s:"# Auto-validado contra Resolução 11/2024-STI"}] },
+  ],
+  "tests.py": [
+    { t: "comment", s: "# tests/ · gerado por DocCode" },
+    { t: "line", parts: [{c:"keyword",s:"import"},{c:"text",s:" pytest"}] },
+    { t: "line", parts: [{c:"keyword",s:"from"},{c:"text",s:" service "},{c:"keyword",s:"import"},{c:"text",s:" CidadaoService"}] },
+    { t: "blank" },
+    { t: "line", parts: [{c:"decorator",s:"@pytest.mark.asyncio"}] },
+    { t: "line", parts: [{c:"keyword",s:"async def"},{c:"text",s:" "},{c:"fn",s:"test_lgpd_compliance"},{c:"text",s:"():"}] },
+    { t: "line", indent: 1, parts: [{c:"text",s:"svc = "},{c:"class",s:"CidadaoService"},{c:"text",s:"()"}] },
+    { t: "line", indent: 1, parts: [{c:"text",s:"r = "},{c:"keyword",s:"await"},{c:"text",s:" svc."},{c:"fn",s:"processar_solicitacao"},{c:"text",s:"({})"}] },
+    { t: "line", indent: 1, parts: [{c:"keyword",s:"assert"},{c:"text",s:" r.compliant "},{c:"keyword",s:"is"},{c:"text",s:" "},{c:"keyword",s:"True"}] },
+  ],
+};
+
+function CodeEditor() {
+  const [file, setFile] = useState("service.py");
+  const [showAI, setShowAI] = useState(false);
+  const [aiText, setAiText] = useState("");
+  const fullAI = "Validação LGPD detectada. Método validate() já integra as regras da Resolução 11/2024-STI. Conformidade garantida antes do deploy.";
+
+  useEffect(() => {
+    const t = setTimeout(() => setShowAI(true), 1200);
+    return () => clearTimeout(t);
+  }, []);
+
+  useEffect(() => {
+    if (!showAI) return;
+    let i = 0;
+    const id = setInterval(() => {
+      i++;
+      setAiText(fullAI.slice(0, i));
+      if (i >= fullAI.length) clearInterval(id);
+    }, 14);
+    return () => clearInterval(id);
+  }, [showAI]);
+
+  const lines = FILES[file];
+
+  return (
+    <div className="godev-editor" style={{
+      background: "var(--code-bg)", borderRadius: 18,
+      boxShadow: "var(--shadow-lg)",
+      border: "1px solid rgba(255,255,255,.06)",
+      overflow: "hidden",
+      fontFamily: 'JetBrains Mono, monospace',
+      color: "#E6F0E8",
+      position: "relative",
+    }}>
+      {/* Title bar */}
+      <div style={{
+        display: "flex", alignItems: "center", gap: 12, padding: "12px 16px",
+        borderBottom: "1px solid rgba(255,255,255,.05)",
+        background: "rgba(255,255,255,.02)",
+      }}>
+        <div style={{ display: "flex", gap: 6 }}>
+          <span style={{ width: 11, height: 11, borderRadius: 999, background: "#FF5F57", opacity: .85 }}/>
+          <span style={{ width: 11, height: 11, borderRadius: 999, background: "#FEBC2E", opacity: .85 }}/>
+          <span style={{ width: 11, height: 11, borderRadius: 999, background: "#28C840", opacity: .85 }}/>
+        </div>
+        <div style={{ display: "flex", gap: 4, marginLeft: 8 }}>
+          {Object.keys(FILES).map(f => (
+            <button key={f} onClick={() => setFile(f)} style={{
+              padding: "6px 12px", fontSize: 11.5, borderRadius: 6,
+              background: f === file ? "rgba(57,182,94,.16)" : "transparent",
+              border: "1px solid " + (f === file ? "rgba(57,182,94,.3)" : "transparent"),
+              color: f === file ? "#A1E8B8" : "rgba(230,240,232,.55)",
+              fontFamily: "inherit", cursor: "pointer", transition: "all .15s",
+            }}>{f}</button>
+          ))}
+        </div>
+        <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: 10, fontSize: 11, color: "rgba(230,240,232,.5)" }}>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "4px 10px", borderRadius: 999, background: "rgba(34, 197, 94, .12)", color: "#A1E8B8" }}>
+            <span style={{ width: 6, height: 6, borderRadius: 999, background: "#A1E8B8", animation: "pulse 1.8s infinite" }}/>
+            GO.DEV IA Ativa
+          </span>
+        </div>
+      </div>
+
+      {/* Code body */}
+      <div style={{ display: "flex", padding: "16px 0", maxHeight: 380, overflow: "auto", fontSize: 13.5, lineHeight: 1.7 }}>
+        <div style={{
+          minWidth: 44, padding: "0 12px", textAlign: "right",
+          color: "rgba(230,240,232,.28)", userSelect: "none",
+        }}>
+          {lines.map((_, i) => <div key={i}>{i+1}</div>)}
+        </div>
+        <div style={{ flex: 1, paddingRight: 20 }}>
+          {lines.map((ln, i) => {
+            if (ln.t === "blank") return <div key={i}>&nbsp;</div>;
+            if (ln.t === "comment") return <div key={i} style={{ color: "var(--code-comment)" }}>{ln.s}</div>;
+            const indent = (ln.indent || 0) * 4;
+            return (
+              <div key={i} style={{ paddingLeft: indent * 8 }}>
+                {ln.parts.map((p, j) => (
+                  <span key={j} style={{ color: codeColor(p.c) }}>{p.s}</span>
+                ))}
+                {ln.cursor && <span className="caret"/>}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* AI assistant overlay */}
+      {showAI && (
+        <div className="ai-popup" style={{
+          position: "absolute", left: 24, right: 24, bottom: 56,
+          background: "color-mix(in oklab, var(--accent) 14%, rgba(15,13,20,.6))",
+          border: "1px solid color-mix(in oklab, var(--accent) 35%, transparent)",
+          borderRadius: 12, padding: "14px 16px",
+          backdropFilter: "blur(20px)",
+          fontFamily: "Inter, sans-serif",
+          fontSize: 13, color: "#F5F2EC",
+          animation: "slideUp .5s ease",
+        }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
+            <span style={{
+              width: 22, height: 22, borderRadius: 6,
+              background: "linear-gradient(135deg, var(--accent), var(--accent-hover))",
+              display: "inline-flex", alignItems: "center", justifyContent: "center",
+              fontSize: 11, fontWeight: 600, color: "#fff",
+            }}>IA</span>
+            <span style={{ fontWeight: 500, fontSize: 12.5 }}>GO.DEV Assistant<span style={{ color: "var(--accent)" }}>IA</span></span>
+            <span style={{ marginLeft: "auto", fontSize: 10.5, color: "rgba(230,240,232,.45)", fontFamily: 'JetBrains Mono, monospace' }}>MCP · GitLab</span>
+          </div>
+          <div style={{ color: "rgba(230,240,232,.85)", lineHeight: 1.5 }}>{aiText}<span className="caret-inline"/></div>
+          <div style={{ marginTop: 8, fontSize: 11, color: "rgba(230,240,232,.5)", display: "flex", alignItems: "center", gap: 6 }}>
+            📎 wiki/lgpd-padrao-sti · atualizado há 2h
+          </div>
+        </div>
+      )}
+
+      {/* Status bar */}
+      <div style={{
+        display: "flex", alignItems: "center", gap: 16,
+        padding: "8px 16px", fontSize: 11, color: "rgba(230,240,232,.5)",
+        borderTop: "1px solid rgba(255,255,255,.05)",
+        background: "rgba(0,0,0,.2)",
+        fontFamily: 'JetBrains Mono, monospace',
+      }}>
+        <span style={{ color: "var(--accent)" }}>● GO.DEV IA</span>
+        <span>Ln 12, Col 34</span>
+        <span style={{ marginLeft: "auto" }}>MCP · GitLab</span>
+        <span>Python 3.12</span>
+      </div>
+
+      <style>{`
+        .caret { display: inline-block; width: 2px; height: 16px; background: #A1E8B8; vertical-align: -3px; animation: blink 1s infinite; margin-left: 1px; }
+        .caret-inline { display: inline-block; width: 6px; height: 11px; background: #A1E8B8; vertical-align: -1px; margin-left: 2px; animation: blink 1s infinite; }
+        @keyframes blink { 0%,49%{opacity:1}50%,100%{opacity:0} }
+        @keyframes pulse { 0%,100%{opacity:.6;transform:scale(1)} 50%{opacity:1;transform:scale(1.4)} }
+        @keyframes slideUp { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+      `}</style>
+    </div>
+  );
+}
+
+function codeColor(c){return {
+  keyword: "#A1E8B8",
+  string: "#A1E8B8",
+  comment: "#4D6B57",
+  fn: "#BAE6FD",
+  decorator: "#FCD34D",
+  class: "#FECDD3",
+  text: "#E6F0E8",
+}[c];}
+
+Object.assign(window, { CodeEditor });
+
+</script>
+<script type="text/babel">
+/* godev/sections.jsx — All GO.DEV page sections */
+const { useState: useS } = React;
+
+/* Big feature badge strip (after hero) */
+function FeatureStrip({ items }) {
+  return (
+    <div style={{
+      display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 1,
+      background: "var(--border)", border: "1px solid var(--border)",
+      borderRadius: 16, overflow: "hidden", marginTop: 56,
+    }} className="strip-grid">
+      {items.map((it, i) => (
+        <div key={i} style={{
+          background: "var(--surface)", padding: "24px 22px",
+          display: "flex", flexDirection: "column", gap: 6,
+        }}>
+          <div style={{ color: "var(--accent)", marginBottom: 4 }}>{React.createElement(ICONS[it.icon], { width: 22, height: 22 })}</div>
+          <div style={{ fontSize: 14.5, fontWeight: 500, color: "var(--text)" }}>{it.title}</div>
+          <div style={{ fontSize: 13, color: "var(--text-2)" }}>{it.desc}</div>
+        </div>
+      ))}
+      <style>{`@media (max-width:920px){.strip-grid{grid-template-columns:1fr 1fr !important}}@media(max-width:560px){.strip-grid{grid-template-columns:1fr !important}}`}</style>
+    </div>
+  );
+}
+
+/* Generic "Big Heading + intro" block */
+function SectionHead({ eyebrow, title, italic, intro, align="left" }) {
+  return (
+    <div style={{ maxWidth: 820, marginBottom: 64, textAlign: align }}>
+      <Reveal><div className="eyebrow" style={{ marginBottom: 18 }}>{eyebrow}</div></Reveal>
+      <Reveal delay={80}><h2 style={{ marginBottom: 20 }}>{title} {italic && <span style={{ color: "var(--accent-text)" }}>{italic}</span>}</h2></Reveal>
+      {intro && <Reveal delay={140}><p style={{ fontSize: 18, maxWidth: 640 }}>{intro}</p></Reveal>}
+    </div>
+  );
+}
+
+/* Problem cards — "Por que existe" */
+function ProblemGrid({ items }) {
+  return (
+    <div className="grid-3" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 20 }}>
+      {items.map((it, i) => (
+        <Reveal delay={i*60} key={it.title} className="card reveal" style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+          <div style={{
+            display: "inline-flex", width: 38, height: 38, borderRadius: 10,
+            background: "var(--surface-2)", border: "1px solid var(--border)",
+            alignItems: "center", justifyContent: "center", color: "var(--accent)",
+          }}>{React.createElement(ICONS[it.icon] || ICONS.bolt, { width: 18, height: 18 })}</div>
+          <h3>{it.title}</h3>
+          <p style={{ fontSize: 14 }}>{it.desc}</p>
+        </Reveal>
+      ))}
+      <style>{`
+        @media (max-width: 920px){.grid-3{grid-template-columns:1fr 1fr !important}}
+        @media (max-width: 560px){.grid-3{grid-template-columns:1fr !important}}
+      `}</style>
+    </div>
+  );
+}
+
+/* Big Feature cards with side art */
+function PlatformGrid({ items }) {
+  return (
+    <div className="grid-3" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 1, background: "var(--border)", borderRadius: 18, overflow: "hidden", border: "1px solid var(--border)" }}>
+      {items.map((it, i) => (
+        <Reveal delay={i*50} key={it.title} className="reveal" style={{
+          background: "var(--surface)", padding: 32, display: "flex", flexDirection: "column", gap: 16, minHeight: 280,
+        }}>
+          <div style={{
+            display: "inline-flex", alignItems: "center", justifyContent: "center",
+            width: 44, height: 44, borderRadius: 12,
+            background: "var(--accent-soft)", color: "var(--accent-text)",
+            border: "1px solid color-mix(in oklab, var(--accent) 18%, transparent)",
+          }}>{React.createElement(ICONS[it.icon], { width: 22, height: 22 })}</div>
+          <h3 style={{ fontSize: 21 }}>{it.title}</h3>
+          <p style={{ fontSize: 14.5, flex: 1 }}>{it.desc}</p>
+          <div className="mono" style={{ fontSize: 11.5, letterSpacing: ".04em", color: "var(--text-3)", paddingTop: 12, borderTop: "1px solid var(--border)" }}>
+            {it.tag}
+          </div>
+        </Reveal>
+      ))}
+    </div>
+  );
+}
+
+/* ───────── Architecture / How it works ───────── */
+function ArchitectureFlow() {
+  return (
+    <div className="arch-wrap" style={{
+      background: "var(--surface)", border: "1px solid var(--border)",
+      borderRadius: 24, padding: 40, position: "relative", overflow: "hidden",
+    }}>
+      <div className="noise"/>
+      <div style={{ display: "grid", gridTemplateColumns: "1fr 1.2fr", gap: 56, position: "relative" }} className="arch-grid">
+        {/* Left: diagram */}
+        <Reveal className="reveal">
+          <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+            <SourceBox title="GitLab Wiki" subs={["Documentação Viva", "Padrões STI", "Regras de Negócio"]}/>
+            <SourceBox title="Repositórios" subs={["Código Fonte"]} accent/>
+            <SourceBox title="Base Legal" subs={["LGPD · Normas"]}/>
+            <div style={{ alignSelf: "center", margin: "4px 0", color: "var(--text-3)" }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M12 4v16M6 14l6 6 6-6"/></svg>
+            </div>
+            <div style={{
+              padding: "20px 22px", borderRadius: 14,
+              background: "linear-gradient(135deg, var(--accent), var(--accent-hover))",
+              color: "#fff",
+            }}>
+              <div style={{ fontFamily: "JetBrains Mono, monospace", fontSize: 11, letterSpacing: ".08em", textTransform: "uppercase", opacity: .8 }}>🚀 GO.DEV · Núcleo IA</div>
+              <div style={{ fontSize: 16, marginTop: 6, fontWeight: 500 }}>Base Unificada & Contextual</div>
+              <div style={{ fontSize: 12.5, opacity: .85, marginTop: 2 }}>Single Source of Truth</div>
+            </div>
+            <div style={{ alignSelf: "center", margin: "4px 0", color: "var(--text-3)" }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M12 4v16M6 14l6 6 6-6"/></svg>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+              <SmallBox title="IDE + MCP" sub="Assistente Contextual"/>
+              <SmallBox title="QA Orquestrado" sub="Testes Inteligentes"/>
+              <SmallBox title="CI/CD Pipeline" sub="Validação & Deploy"/>
+              <SmallBox title="DocCode" sub="Geração Automática"/>
+            </div>
+          </div>
+        </Reveal>
+
+        {/* Right: steps */}
+        <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+          {[
+            ["01", "IDE conectada ao Estado", "Via Protocolo MCP, sua IDE se conecta diretamente à base de conhecimento institucional. A IA lê a documentação oficial e sugere código em conformidade."],
+            ["02", "Documentação que se atualiza sozinha", "Sincronização bidirecional entre código e documentação. Ao alterar o código, a doc é atualizada. Ao atualizar a doc, o código é validado."],
+            ["03", "Deploy com conformidade garantida", "Agentes de QA validam automaticamente LGPD, padrões arquiteturais e regras de negócio antes de qualquer deploy chegar à produção."],
+          ].map(([n, t, d], i) => (
+            <Reveal delay={i*100} key={n} style={{ display: "grid", gridTemplateColumns: "48px 1fr", gap: 16 }}>
+              <div style={{ fontSize: 38, color: "var(--accent)", lineHeight: 1 }}>{n}</div>
+              <div>
+                <h3 style={{ fontSize: 22, marginBottom: 8 }}>{t}</h3>
+                <p style={{ fontSize: 14.5 }}>{d}</p>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </div>
+      <style>{`
+        @media (max-width: 920px){
+          .arch-grid{grid-template-columns:1fr !important; gap:36px !important}
+          .arch-wrap{padding:24px !important}
+        }
+      `}</style>
+    </div>
+  );
+}
+
+function SourceBox({ title, subs, accent }) {
+  return (
+    <div style={{
+      padding: "14px 18px", borderRadius: 12,
+      background: accent ? "var(--accent-soft)" : "var(--surface-2)",
+      border: "1px solid " + (accent ? "color-mix(in oklab, var(--accent) 22%, transparent)" : "var(--border)"),
+    }}>
+      <div style={{ fontSize: 14, fontWeight: 500, color: "var(--text)" }}>{title}</div>
+      <div className="mono" style={{ fontSize: 11, color: "var(--text-2)", marginTop: 4 }}>{subs.join(" · ")}</div>
+    </div>
+  );
+}
+function SmallBox({ title, sub }) {
+  return (
+    <div style={{ padding: 14, borderRadius: 10, background: "var(--surface-2)", border: "1px solid var(--border)" }}>
+      <div style={{ fontSize: 13, fontWeight: 500 }}>{title}</div>
+      <div style={{ fontSize: 11.5, color: "var(--text-2)", marginTop: 2 }}>{sub}</div>
+    </div>
+  );
+}
+
+/* ───────── Pilares ───────── */
+function PillarsGrid({ items }) {
+  return (
+    <div className="grid-3" style={{ display: "grid", gridTemplateColumns: "repeat(3,1fr)", gap: 20 }}>
+      {items.map((p, i) => (
+        <Reveal delay={i*60} key={p.title} className="card reveal" style={{ minHeight: 220, display: "flex", flexDirection: "column", gap: 12 }}>
+          <div className="mono" style={{ fontSize: 11, color: "var(--accent-text)", textTransform: "uppercase", letterSpacing: ".1em" }}>{p.kicker}</div>
+          <h3 style={{ fontSize: 22 }}>{p.title}</h3>
+          <p style={{ fontSize: 14 }}>{p.desc}</p>
+        </Reveal>
+      ))}
+    </div>
+  );
+}
+
+/* ───────── Para quem (tabbed) ───────── */
+function PersonaTabs({ tabs }) {
+  const [idx, setIdx] = useS(0);
+  const t = tabs[idx];
+  return (
+    <div>
+      <div className="persona-tabs" style={{ display: "flex", gap: 4, padding: 4,
+        background: "var(--surface-2)", border: "1px solid var(--border)",
+        borderRadius: 999, width: "fit-content", marginBottom: 40,
+      }}>
+        {tabs.map((tab, i) => (
+          <button key={tab.label} onClick={() => setIdx(i)} style={{
+            padding: "10px 20px", borderRadius: 999, border: "none",
+            background: i === idx ? "var(--text)" : "transparent",
+            color: i === idx ? "var(--bg)" : "var(--text-2)",
+            fontSize: 13.5, fontWeight: 500, letterSpacing: "-.005em",
+            cursor: "pointer", transition: "all .2s",
+          }}>{tab.label}</button>
+        ))}
+      </div>
+      <div className="persona-card" style={{
+        display: "grid", gridTemplateColumns: "1.3fr 1fr", gap: 56,
+        background: "var(--surface)", border: "1px solid var(--border)",
+        borderRadius: 24, padding: 48,
+      }} key={idx}>
+        <div>
+          <div className="mono" style={{ fontSize: 11, letterSpacing: ".12em", textTransform: "uppercase", color: "var(--accent-text)", marginBottom: 10 }}>{t.role}</div>
+          <h3 style={{ fontSize: 32 }}>{t.headline}</h3>
+          <p style={{ marginTop: 16, fontSize: 15.5, maxWidth: 460 }}>{t.body}</p>
+          <ul style={{ marginTop: 24, listStyle: "none", padding: 0, display: "flex", flexDirection: "column", gap: 12 }}>
+            {t.bullets.map(b => (
+              <li key={b} style={{ display: "flex", gap: 12, alignItems: "flex-start", fontSize: 14.5 }}>
+                <span style={{
+                  flexShrink: 0, marginTop: 4,
+                  width: 16, height: 16, borderRadius: 999,
+                  background: "var(--accent-soft)", color: "var(--accent-text)",
+                  display: "inline-flex", alignItems: "center", justifyContent: "center",
+                }}>
+                  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><path d="M5 12l5 5L20 7"/></svg>
+                </span>
+                <span style={{ color: "var(--text)" }}>{b}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div style={{
+          background: "var(--surface-2)", borderRadius: 16, padding: 32,
+          display: "flex", flexDirection: "column", justifyContent: "space-between",
+          border: "1px solid var(--border)",
+        }}>
+          <div>
+            <div style={{ fontSize: 28, lineHeight: 1.15, color: "var(--text)" }}>{t.quote}</div>
+          </div>
+          <div className="mono" style={{ fontSize: 11, color: "var(--text-3)", letterSpacing: ".06em", marginTop: 24 }}>{t.tech}</div>
+        </div>
+      </div>
+      <style>{`
+        @media (max-width: 920px){
+          .persona-card{grid-template-columns:1fr !important; padding:28px !important; gap:24px !important}
+          .persona-tabs{flex-wrap:wrap}
+        }
+      `}</style>
+    </div>
+  );
+}
+
+/* ───────── Impactos ───────── */
+function ImpactStats({ stats }) {
+  return (
+    <div className="grid-4" style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 0,
+      borderTop: "1px solid var(--border)", borderBottom: "1px solid var(--border)" }}>
+      {stats.map((s, i) => (
+        <Reveal delay={i*80} key={s.value} className="reveal" style={{
+          padding: "40px 0", borderRight: i < stats.length-1 ? "1px solid var(--border)" : "none",
+          textAlign: "center",
+        }}>
+          <div style={{ fontSize: "clamp(56px, 6vw, 92px)", lineHeight: 1, color: "var(--text)", letterSpacing: "-.03em" }}>{s.value}</div>
+          <div style={{ marginTop: 12, fontSize: 13.5, color: "var(--text-2)", maxWidth: 220, marginInline: "auto" }}>{s.label}</div>
+        </Reveal>
+      ))}
+      <style>{`
+        @media (max-width:920px){
+          .grid-4{grid-template-columns:1fr 1fr !important}
+          .grid-4>div{border-right:none !important}
+          .grid-4>div:nth-child(odd){border-right:1px solid var(--border) !important}
+          .grid-4>div:nth-child(1),.grid-4>div:nth-child(2){border-bottom:1px solid var(--border)}
+        }
+      `}</style>
+    </div>
+  );
+}
+
+/* ───────── CTA banner ───────── */
+function CTABanner({ headline, italic, blurb, primary, secondary }) {
+  return (
+    <div id="cta" style={{
+      background: "var(--text)", color: "var(--bg)",
+      borderRadius: 24, padding: "80px 48px", position: "relative", overflow: "hidden",
+    }}>
+      <div className="noise"/>
+      <div style={{ position: "relative", maxWidth: 880 }}>
+        <Reveal>
+          <h2 style={{ color: "var(--bg)", fontSize: "clamp(40px, 5vw, 72px)" }}>
+            {headline} <span style={{ color: "#C4B5FD" }}>{italic}</span>
+          </h2>
+        </Reveal>
+        <Reveal delay={80}>
+          <p style={{ fontSize: 17, color: "rgba(245,242,236,.7)", marginTop: 20, maxWidth: 640 }}>{blurb}</p>
+        </Reveal>
+        <Reveal delay={140} style={{ display: "flex", gap: 12, marginTop: 36, flexWrap: "wrap" }}>
+          <a href="#" className="btn" style={{ background: "var(--bg)", color: "var(--text)" }}>{primary} <span aria-hidden>→</span></a>
+          <a href="#" className="btn" style={{ background: "transparent", color: "var(--bg)", border: "1px solid rgba(245,242,236,.25)" }}>{secondary}</a>
+        </Reveal>
+      </div>
+    </div>
+  );
+}
+
+Object.assign(window, { FeatureStrip, SectionHead, ProblemGrid, PlatformGrid, ArchitectureFlow, PillarsGrid, PersonaTabs, ImpactStats, CTABanner });
+
+</script>
+<script type="text/babel">
+/* godev/app.jsx — Main GO.DEV page composition */
+const { useState: uS, useEffect: uE } = React;
+
+const GODEV_DATA = {
+  brand: { initials: "GD", wordmark: "GO.DEV", key: "godev", logo: "data:image/png;base64,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", logoHeight: 28 },
+  nav: ["Plataforma", "Arquitetura", "Pilares", "Para quem", "Impactos", "Documentação"],
+  hero: {
+    eyebrow: "Ecossistema IA · Framework GO",
+    title: "Arquitetura",
+    italic: "integrada com IA",
+    titleEnd: "para desenvolvimento ágil",
+    sub: "Ecossistema IA para desenvolvimento ágil de produtos digitais. Orquestração multiagente integrada ao seu fluxo de trabalho.",
+    sub2: "Produtividade real para quem desenvolve. Inteligência acessível para quem decide.",
+  },
+  strip: [
+    { icon: "bolt",   title: "Desenvolvimento Integrado", desc: "Ciclo completo assistido por IA" },
+    { icon: "doc",    title: "Documentação Viva", desc: "Sincronizada com o código em real-time" },
+    { icon: "shield", title: "Governança Corporativa", desc: "Auditável, seguro e conforme à LGPD" },
+    { icon: "branch", title: "Protocolo MCP", desc: "IDE conectada ao conhecimento do Estado" },
+  ],
+  problems: [
+    { icon: "doc",    title: "Documentação Desconectada", desc: "Documentos estáticos que se tornam obsoletos rapidamente, dificultando o entendimento e gerando inconsistências no desenvolvimento." },
+    { icon: "cube",   title: "Silos de Conhecimento",     desc: "Dependência crítica de poucos desenvolvedores que detêm o conhecimento técnico. Risco institucional real na troca de equipes." },
+    { icon: "pulse",  title: "Baixa Produtividade",       desc: "Tempo excessivo gasto em tarefas repetitivas (boilerplate), configurações manuais e consultas a documentação desatualizada." },
+    { icon: "compass",title: "Onboarding Lento",          desc: "Dificuldade para novos desenvolvedores entenderem padrões e arquiteturas do Estado. Meses de ramp-up desnecessários." },
+    { icon: "spark",  title: "Base Inadequada para IA",   desc: "Falta de conhecimento estruturado para o uso eficiente de assistentes de IA. Sem contexto oficial, a IA gera código genérico." },
+    { icon: "graph",  title: "Fragmentação de Sistemas",  desc: "Dezenas de sistemas isolados sem padrão unificado. Cada órgão desenvolve do zero, duplicando esforços e criando inconsistências." },
+  ],
+  platform: [
+    { icon: "doc",    title: "Documentação Viva",       desc: "Sincronização em tempo real entre código, arquitetura e documentação técnica via GitLab. A doc nunca fica desatualizada.", tag: "📄 LiveDocs · GitLab Wiki" },
+    { icon: "bolt",   title: "Geração Automática (DocCode)", desc: "Criação instantânea de telas e serviços a partir da interpretação semântica da documentação. Do doc para o código em segundos.", tag: "⚡ DocCode · Auto-generate" },
+    { icon: "spark",  title: "Assistência Contextual IA", desc: "IA que consome a documentação técnica oficial para guiar desenvolvedores e gestores com respostas baseadas nos padrões do Estado.", tag: "🤖 IA · Protocolo MCP" },
+    { icon: "branch", title: "Arquitetura Multiagente", desc: "Orquestração completa do ciclo de desenvolvimento com agentes inteligentes especializados em cada fase: plan, code, test, deploy.", tag: "🔗 Multiagente · Orquestração" },
+    { icon: "shield", title: "Governança e Auditoria",  desc: "Sistema totalmente auditável, preparado para o futuro digital. Conformidade com LGPD e padrões de segurança governamentais.", tag: "🛡 LGPD · Auditável" },
+    { icon: "layers", title: "Transversalidade Total",  desc: "Atende a diversos órgãos e sistemas de forma padronizada. Uma plataforma, todos os órgãos do Estado de Goiás.", tag: "🏛 Multi-órgão · Padronizado" },
+  ],
+  pillars: [
+    { kicker: "Desenvolvimento", title: "Desenvolvimento Integrado",  desc: "Ciclo completo de desenvolvimento assistido por IA, desde o planejamento até o deploy, com conformidade automática a cada etapa." },
+    { kicker: "Inteligência Artificial", title: "IA Contextual e Aplicada", desc: "IA integrada ao cotidiano do desenvolvedor, capaz de interpretar documentação oficial e sugerir código conforme os padrões do Estado em tempo real." },
+    { kicker: "Governança",      title: "Governança e Conformidade",  desc: "Sistema auditável e preparado para LGPD. Toda decisão técnica é rastreável, todo deploy é validado, toda conformidade é garantida automaticamente." },
+    { kicker: "Produtividade",   title: "Produtividade Real",         desc: "Elimina boilerplate, onboarding lento e documentação desconectada. Desenvolvedores entregam mais rápido e com maior qualidade." },
+    { kicker: "Padronização",    title: "Padrão Único para o Estado", desc: "Um ecossistema que atende todos os órgãos com padrões unificados. Transversalidade real: mesmo framework, mesma qualidade em toda a administração." },
+    { kicker: "Autonomia",       title: "Autonomia Institucional",    desc: "Conhecimento técnico distribuído e acessível. A capacidade do Estado não depende de indivíduos — ela vive na plataforma e cresce com o tempo." },
+  ],
+  personas: [
+    { label: "Desenvolvedores", role: "Desenvolvedores de Software", headline: "Produtividade máxima no seu workflow",
+      body: "Desenvolvedores recebem orientação contextual diretamente na IDE, sem sair do ambiente de desenvolvimento para consultar documentação externa. A IA conhece os padrões do Estado.",
+      bullets: ["Assistente integrado à IDE via Protocolo MCP","Padrões arquiteturais STI sugeridos proativamente","Geração automática de código (DocCode)","Conformidade com LGPD garantida antes do deploy","Onboarding em horas, não meses"],
+      quote: "Código em conformidade com os padrões do Estado.", tech: "IDE · MCP · CI/CD · GitLab · DocCode" },
+    { label: "Arquitetos", role: "Arquitetos de Sistemas", headline: "Padrões que se autopropagam",
+      body: "Arquitetos definem padrões uma vez e a plataforma os garante em todos os órgãos. Decisões técnicas viram conhecimento institucional, não notas isoladas.",
+      bullets: ["Padrões arquiteturais versionados e auditáveis","Documentação viva sincronizada com código","Visibilidade transversal de todos os sistemas","Governança por design, não por revisão manual"],
+      quote: "Padrões que vivem na plataforma, não em PDFs.", tag: "STI · GitLab · Arquitetura", tech: "ADRs · Wiki · Padrões STI · Multi-órgão" },
+    { label: "Gestores", role: "Gestão Pública / Tecnologia", headline: "Inteligência acessível para quem decide",
+      body: "Gestores acompanham produtividade, conformidade e qualidade em tempo real. Decisões técnicas se traduzem em métricas de impacto público claras.",
+      bullets: ["Painéis de produtividade e conformidade","Rastreabilidade de cada deploy e cada decisão","Redução comprovada de tempo de entrega","Autonomia institucional reduz risco de chave-única"],
+      quote: "Decisão técnica vira impacto público mensurável.", tech: "Dashboards · LGPD · Audit Trail · KPIs" },
+    { label: "QA / Testers", role: "Qualidade & Testes", headline: "Validação contínua, sem fricção",
+      body: "Agentes de QA validam conformidade LGPD, padrões arquiteturais e regras de negócio automaticamente, em cada commit. Testers focam no que importa: comportamento e UX.",
+      bullets: ["Agentes de QA orquestrados no pipeline CI/CD","Testes gerados a partir da documentação","Validação automática de LGPD e regras de negócio","Bloqueio de deploy não-conforme antes da produção"],
+      quote: "Conformidade não é etapa final — é contínua.", tech: "CI/CD · QA Agents · LGPD · Pipeline" },
+  ],
+  stats: [
+    { value: "3×",   label: "Velocidade de entrega de serviços públicos digitais" },
+    { value: "80%",  label: "Redução de tempo em onboarding de novos desenvolvedores" },
+    { value: "100%", label: "Conformidade LGPD garantida antes de cada deploy" },
+    { value: "24/7", label: "Assistência contextual disponível para toda equipe" },
+  ],
+  motto: "Infraestrutura invisível de inteligência. O cérebro do desenvolvimento goiano. O framework oficial da TI pública. A memória viva do Estado.",
+  footerTagline: "Ecossistema IA para Desenvolvimento Ágil",
+  footerBlurb: "Ecossistema de inteligência e desenvolvimento do Estado de Goiás. Iniciativa da Subsecretaria de Tecnologia da Informação (STI) em parceria com a Rede TIC.",
+  footerCols: [
+    { title: "Plataforma",  items: ["Funcionalidades","Como funciona","Arquitetura MCP","DocCode","Roadmap"] },
+    { title: "Para quem",   items: ["Desenvolvedores","Arquitetos","Gestores públicos","Equipes de QA"] },
+    { title: "Suporte",     items: ["Documentação técnica","Manual Inteligente","Central de ajuda","Status do serviço","Contato institucional"] },
+  ],
+  version: "JAN/2026 · v1.0 · MVP",
+};
+
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "accent": "#2E7D40",
+  "dark": false,
+  "showGrid": false
+}/*EDITMODE-END*/;
+
+const ACCENT_OPTIONS = ["#2E7D40","#6E56CF","#3B82F6","#22D3A8","#E94B6B","#F59E0B"];
+
+function App() {
+  const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  uE(() => { applyAccent(t.accent); }, [t.accent]);
+  uE(() => { applyTheme(t.dark); }, [t.dark]);
+  useReveal();
+
+  const D = GODEV_DATA;
+
+  return (
+    <>
+      <SiteNav brand={D.brand} navItems={D.nav} dark={t.dark} onToggleTheme={() => setTweak("dark", !t.dark)} />
+
+      {/* ─── HERO ─── */}
+      <section style={{ paddingTop: 140, paddingBottom: 96, position: "relative", overflow: "hidden" }} id="plataforma">
+        {t.showGrid && <div className="divider-grid" style={{ position:"absolute", inset:0, opacity: .4, maskImage:"radial-gradient(circle at center, black 30%, transparent 80%)" }}/>}
+        <div className="container">
+          <Reveal><div className="eyebrow" style={{ marginBottom: 28 }}>{D.hero.eyebrow}</div></Reveal>
+          <div style={{ display: "grid", gridTemplateColumns: "1.05fr 1fr", gap: 56, alignItems: "center" }} className="hero-grid">
+            <div>
+              <Reveal delay={60}>
+                <h1>
+                  {D.hero.title} <span style={{ color: "var(--accent-text)" }}>{D.hero.italic}</span> {D.hero.titleEnd}
+                </h1>
+              </Reveal>
+              <Reveal delay={140}>
+                <p style={{ fontSize: 18.5, marginTop: 28, maxWidth: 560 }}>{D.hero.sub}</p>
+                <p style={{ fontSize: 16, color: "var(--text-3)", marginTop: 14, maxWidth: 560 }}>{D.hero.sub2}</p>
+              </Reveal>
+              <Reveal delay={220} style={{ display: "flex", gap: 12, marginTop: 36, flexWrap: "wrap" }}>
+                <a href="#cta" className="btn btn-primary">Acessar plataforma <span aria-hidden>→</span></a>
+                <a href="#" className="btn btn-secondary">Documentação técnica</a>
+              </Reveal>
+            </div>
+            <Reveal delay={200}><CodeEditor/></Reveal>
+          </div>
+          <Reveal delay={320}><FeatureStrip items={D.strip}/></Reveal>
+        </div>
+        <style>{`@media(max-width:1080px){.hero-grid{grid-template-columns:1fr !important;gap:40px !important}}`}</style>
+      </section>
+
+      {/* ─── POR QUE EXISTE ─── */}
+      <section id="arquitetura">
+        <div className="container">
+          <SectionHead eyebrow="Por que o GO.DEV existe" title="Os problemas que" italic="resolvemos." intro="O desenvolvimento de software governamental enfrenta desafios estruturais que o GO.DEV foi criado para eliminar."/>
+          <ProblemGrid items={D.problems}/>
+        </div>
+      </section>
+
+      {/* ─── PLATAFORMA ─── */}
+      <section>
+        <div className="container">
+          <SectionHead eyebrow="Plataforma GO.DEV" title="Uma plataforma." italic="Tudo integrado." intro="O GO.DEV atua como núcleo de transformação tecnológica, integrando IA, documentação viva e governança em um único ecossistema."/>
+          <PlatformGrid items={D.platform}/>
+        </div>
+      </section>
+
+      {/* ─── COMO FUNCIONA ─── */}
+      <section>
+        <div className="container">
+          <SectionHead eyebrow="Como funciona" title="Arquitetura que" italic="orquestra tudo." intro="O grande diferencial é a integração multiagente direta entre a base de conhecimento institucional e o ambiente de desenvolvimento via protocolo MCP."/>
+          <ArchitectureFlow/>
+        </div>
+      </section>
+
+      {/* ─── PILARES ─── */}
+      <section id="pilares">
+        <div className="container">
+          <SectionHead eyebrow="Pilares Estratégicos" title="Mais que uma ferramenta." italic="Uma infraestrutura." />
+          <PillarsGrid items={D.pillars}/>
+        </div>
+      </section>
+
+      {/* ─── PARA QUEM ─── */}
+      <section id="para-quem">
+        <div className="container">
+          <SectionHead eyebrow="Para quem é" title="Um ecossistema para" italic="todos os perfis." />
+          <PersonaTabs tabs={D.personas}/>
+        </div>
+      </section>
+
+      {/* ─── IMPACTOS ─── */}
+      <section id="impactos" style={{ paddingTop: 80, paddingBottom: 80 }}>
+        <div className="container">
+          <SectionHead eyebrow="Impactos esperados" title="Resultados que" italic="transformam." intro="O GO.DEV muda a forma como o Estado de Goiás desenvolve, entrega e evolui seus produtos digitais." />
+          <ImpactStats stats={D.stats}/>
+        </div>
+      </section>
+
+      {/* ─── CTA ─── */}
+      <section style={{ paddingTop: 60, paddingBottom: 120 }}>
+        <div className="container">
+          <CTABanner
+            headline="O código deixa de ser boilerplate e passa a"
+            italic="entregar valor."
+            blurb={D.motto}
+            primary="Acessar o GO.DEV"
+            secondary="Documentação técnica"
+          />
+          <Reveal delay={120}>
+            <p style={{ textAlign: "center", marginTop: 40, fontSize: 18, color: "var(--text-2)" }}>
+              "Produtividade real para quem desenvolve. Inteligência acessível para quem decide." <span style={{ color: "var(--text-3)" }}>— GO.DEV · STI · Goiás</span>
+            </p>
+          </Reveal>
+        </div>
+      </section>
+
+      <SiteFooter
+        brand={D.brand}
+        tagline={D.footerTagline}
+        blurb={D.footerBlurb}
+        columns={D.footerCols}
+        version={D.version}
+        motto={<><span>O código deixa de ser boilerplate e </span><span style={{ color: "var(--accent-text)" }}>passa a entregar valor.</span></>}
+      />
+
+      {/* TWEAKS */}
+      <TweaksPanel>
+        <TweakSection label="Tema" />
+        <TweakToggle label="Modo escuro" value={t.dark} onChange={v => setTweak("dark", v)} />
+        <TweakSection label="Cor de destaque" />
+        <TweakColor label="Accent" value={t.accent} options={ACCENT_OPTIONS} onChange={v => setTweak("accent", v)} />
+        <TweakSection label="Layout" />
+        <TweakToggle label="Grade de fundo no hero" value={t.showGrid} onChange={v => setTweak("showGrid", v)} />
+      </TweaksPanel>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App/>);
+
+</script>
+</body>
+</html>
