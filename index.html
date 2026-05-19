@@ -261,6 +261,8 @@ section.xl { padding: 120px 0; }
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
 }
 
+/* ── FeatureStrip inside hero (no margin-top override) ── */
+.feature-strip-hero { margin-top: 0 !important; }
 </style>
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin></script>
@@ -933,10 +935,10 @@ function SiteNav({ brand, navItems, ctaLabel="Acessar plataforma", dark, onToggl
   return (
     <header style={{
       position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000,
-      backdropFilter: scrolled ? "blur(14px) saturate(160%)" : "none",
-      WebkitBackdropFilter: scrolled ? "blur(14px) saturate(160%)" : "none",
-      background: scrolled ? "color-mix(in oklab, var(--bg) 80%, transparent)" : "transparent",
-      borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent",
+      backdropFilter: "blur(14px) saturate(160%)",
+      WebkitBackdropFilter: "blur(14px) saturate(160%)",
+      background: "rgba(11,30,20,0.92)",
+      borderBottom: "1px solid rgba(255,255,255,0.07)",
       transition: "all .25s ease",
     }}>
       <div className="container" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "16px 32px", maxWidth: 1280 }}>
@@ -948,11 +950,11 @@ function SiteNav({ brand, navItems, ctaLabel="Acessar plataforma", dark, onToggl
         <nav className="nav-desktop" style={{ display: "flex", gap: 28, alignItems: "center" }}>
           {navItems.map(item => (
             <a key={item} href={`#${slug(item)}`} style={{
-              fontSize: 13.5, color: "var(--text-2)", fontWeight: 450, letterSpacing: "-.005em",
+              fontSize: 13.5, color: "rgba(255,255,255,0.65)", fontWeight: 450, letterSpacing: "-.005em",
               transition: "color .15s",
             }}
-            onMouseOver={e => e.currentTarget.style.color = "var(--text)"}
-            onMouseOut={e => e.currentTarget.style.color = "var(--text-2)"}>{item}</a>
+            onMouseOver={e => e.currentTarget.style.color = "#ffffff"}
+            onMouseOut={e => e.currentTarget.style.color = "rgba(255,255,255,0.65)"}>{item}</a>
           ))}
         </nav>
         <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
@@ -1303,7 +1305,7 @@ function SectionHead({ eyebrow, title, italic, intro, align="left" }) {
   return (
     <div style={{ maxWidth: 820, marginBottom: 64, textAlign: align }}>
       <Reveal><div className="eyebrow" style={{ marginBottom: 18 }}>{eyebrow}</div></Reveal>
-      <Reveal delay={80}><h2 style={{ marginBottom: 20 }}>{title} {italic && <span style={{ color: "var(--accent-text)" }}>{italic}</span>}</h2></Reveal>
+      <Reveal delay={80}><h2 style={{ marginBottom: 20 }}>{title} {italic && <span style={{ color: "var(--accent)" }}>{italic}</span>}</h2></Reveal>
       {intro && <Reveal delay={140}><p style={{ fontSize: 18, maxWidth: 640 }}>{intro}</p></Reveal>}
     </div>
   );
@@ -1555,22 +1557,22 @@ function ImpactStats({ stats }) {
 function CTABanner({ headline, italic, blurb, primary, secondary }) {
   return (
     <div id="cta" style={{
-      background: "var(--text)", color: "var(--bg)",
+      background: "#0A1E14", color: "#fff",
       borderRadius: 24, padding: "80px 48px", position: "relative", overflow: "hidden",
     }}>
       <div className="noise"/>
       <div style={{ position: "relative", maxWidth: 880 }}>
         <Reveal>
           <h2 style={{ color: "var(--bg)", fontSize: "clamp(40px, 5vw, 72px)" }}>
-            {headline} <span style={{ color: "#C4B5FD" }}>{italic}</span>
+            {headline} <span style={{ color: "var(--accent)" }}>{italic}</span>
           </h2>
         </Reveal>
         <Reveal delay={80}>
-          <p style={{ fontSize: 17, color: "rgba(245,242,236,.7)", marginTop: 20, maxWidth: 640 }}>{blurb}</p>
+          <p style={{ fontSize: 17, color: "rgba(255,255,255,0.62)", marginTop: 20, maxWidth: 640 }}>{blurb}</p>
         </Reveal>
         <Reveal delay={140} style={{ display: "flex", gap: 12, marginTop: 36, flexWrap: "wrap" }}>
-          <a href="#" className="btn" style={{ background: "var(--bg)", color: "var(--text)" }}>{primary} <span aria-hidden>→</span></a>
-          <a href="#" className="btn" style={{ background: "transparent", color: "var(--bg)", border: "1px solid rgba(245,242,236,.25)" }}>{secondary}</a>
+          <a href="#" className="btn btn-primary" style={{}}>{primary} <span aria-hidden>→</span></a>
+          <a href="#" className="btn" style={{ background: "transparent", color: "rgba(255,255,255,0.85)", border: "1px solid rgba(255,255,255,0.22)" }}>{secondary}</a>
         </Reveal>
       </div>
     </div>
@@ -1678,35 +1680,54 @@ function App() {
 
   return (
     <>
-      <SiteNav brand={D.brand} navItems={D.nav} dark={t.dark} onToggleTheme={() => setTweak("dark", !t.dark)} />
+      <SiteNav brand={D.brand} navItems={D.nav} dark={true} onToggleTheme={() => setTweak("dark", !t.dark)} />
 
-      {/* ─── HERO ─── */}
-      <section style={{ paddingTop: 140, paddingBottom: 96, position: "relative", overflow: "hidden" }} id="plataforma">
-        {t.showGrid && <div className="divider-grid" style={{ position:"absolute", inset:0, opacity: .4, maskImage:"radial-gradient(circle at center, black 30%, transparent 80%)" }}/>}
+      {/* ─── HERO ─── dark green full-bleed */}
+      <section style={{
+        paddingTop: 148, paddingBottom: 88,
+        position: "relative", overflow: "hidden",
+        background: "#0B1E14",
+      }} id="plataforma">
+        {t.showGrid && <div className="divider-grid" style={{ position:"absolute", inset:0, opacity: .12, maskImage:"radial-gradient(ellipse 70% 60% at 50% 40%, black 30%, transparent 80%)" }}/>}
         <div className="container">
-          <Reveal><div className="eyebrow" style={{ marginBottom: 28 }}>{D.hero.eyebrow}</div></Reveal>
+          <Reveal>
+            <div style={{
+              display: "inline-flex", alignItems: "center", gap: 8,
+              fontFamily: "var(--font-mono)", fontSize: 12, fontWeight: 500,
+              letterSpacing: ".12em", textTransform: "uppercase",
+              color: "#A1E8B8", marginBottom: 28,
+            }}>
+              <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#39B65E", boxShadow: "0 0 0 4px rgba(57,182,94,0.25)" }}/>
+              {D.hero.eyebrow}
+            </div>
+          </Reveal>
           <div style={{ display: "grid", gridTemplateColumns: "1.05fr 1fr", gap: 56, alignItems: "center" }} className="hero-grid">
             <div>
               <Reveal delay={60}>
-                <h1>
-                  {D.hero.title} <span style={{ color: "var(--accent-text)" }}>{D.hero.italic}</span> {D.hero.titleEnd}
+                <h1 style={{ color: "#F3F4F6", letterSpacing: "-.03em" }}>
+                  {D.hero.title} <span style={{ color: "#39B65E" }}>{D.hero.italic}</span> {D.hero.titleEnd}
                 </h1>
               </Reveal>
               <Reveal delay={140}>
-                <p style={{ fontSize: 18.5, marginTop: 28, maxWidth: 560 }}>{D.hero.sub}</p>
-                <p style={{ fontSize: 16, color: "var(--text-3)", marginTop: 14, maxWidth: 560 }}>{D.hero.sub2}</p>
+                <p style={{ fontSize: 18.5, marginTop: 28, maxWidth: 560, color: "rgba(255,255,255,0.68)" }}>{D.hero.sub}</p>
+                <p style={{ fontSize: 15.5, marginTop: 14, maxWidth: 560, color: "rgba(255,255,255,0.42)" }}>{D.hero.sub2}</p>
               </Reveal>
-              <Reveal delay={220} style={{ display: "flex", gap: 12, marginTop: 36, flexWrap: "wrap" }}>
-                <a href="#cta" className="btn btn-primary">Acessar plataforma <span aria-hidden>→</span></a>
-                <a href="#" className="btn btn-secondary">Documentação técnica</a>
+              <Reveal delay={220} style={{ display: "flex", gap: 12, marginTop: 40, flexWrap: "wrap" }}>
+                <a href="#cta" className="btn btn-primary" style={{ boxShadow: "0 6px 24px -6px rgba(57,182,94,0.55)" }}>Acessar plataforma <span aria-hidden>→</span></a>
+                <a href="#" className="btn" style={{ background: "transparent", color: "rgba(255,255,255,0.85)", border: "1px solid rgba(255,255,255,0.22)" }}>Documentação técnica</a>
               </Reveal>
             </div>
             <Reveal delay={200}><CodeEditor/></Reveal>
           </div>
-          <Reveal delay={320}><FeatureStrip items={D.strip}/></Reveal>
         </div>
         <style>{`@media(max-width:1080px){.hero-grid{grid-template-columns:1fr !important;gap:40px !important}}`}</style>
       </section>
+      {/* ─── FEATURE STRIP (white bg, below hero) ─── */}
+      <div style={{ background: "var(--bg)", borderBottom: "1px solid var(--border)" }}>
+        <div className="container">
+          <Reveal><FeatureStrip items={D.strip}/></Reveal>
+        </div>
+      </div>
 
       {/* ─── POR QUE EXISTE ─── */}
       <section id="arquitetura">
